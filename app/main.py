@@ -23,6 +23,7 @@ def require_api_key(value: str | None = Security(API_KEY_HEADER)) -> None:
 app = FastAPI(
     title="Fagor 8050 M CNC Advisory API",
     version="1.0.0",
+    servers=[{"url": "https://fagor-8050-cnc-api.onrender.com"}],
     description=(
         "Static G-code checks and transparent machining calculations. "
         "Advisory only: always simulate, dry-run, and obtain operator approval."

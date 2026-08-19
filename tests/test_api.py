@@ -15,6 +15,14 @@ def test_health() -> None:
     assert result.json()["status"] == "ok"
 
 
+def test_openapi_declares_live_server_and_security() -> None:
+    schema = client.get("/openapi.json").json()
+    assert schema["servers"] == [{"url": "https://fagor-8050-cnc-api.onrender.com"}]
+    assert schema["components"]["securitySchemes"]["APIKeyHeader"] == {
+        "type": "apiKey", "in": "header", "name": "X-API-Key"
+    }
+
+
 def test_cutting_parameters() -> None:
     result = client.post("/v1/cutting-parameters/calculate", json={
         "operation": "slotting",
