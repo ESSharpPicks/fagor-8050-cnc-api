@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: fagor-8050-cnc-api
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: CNC_API_KEY
+        generateValue: true
+
