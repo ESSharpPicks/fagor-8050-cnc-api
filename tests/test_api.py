@@ -23,6 +23,12 @@ def test_openapi_declares_live_server_and_security() -> None:
     }
 
 
+def test_privacy_policy_is_public() -> None:
+    result = client.get("/privacy")
+    assert result.status_code == 200
+    assert "Privacy Policy" in result.text
+
+
 def test_cutting_parameters() -> None:
     result = client.post("/v1/cutting-parameters/calculate", json={
         "operation": "slotting",

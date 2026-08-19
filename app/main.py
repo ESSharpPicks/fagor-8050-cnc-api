@@ -8,6 +8,7 @@ from typing import Literal
 import pyclipper
 from fastapi import Depends, FastAPI, HTTPException, Security
 from fastapi.security import APIKeyHeader
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
@@ -138,6 +139,20 @@ def axis_words(line: str) -> dict[str, float]:
 @app.get("/health", include_in_schema=False)
 def health() -> dict[str, str]:
     return {"status": "ok", "service": "fagor-8050-m-advisory"}
+
+
+@app.get("/privacy", response_class=HTMLResponse, include_in_schema=False)
+def privacy_policy() -> str:
+    return """<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<title>Privacy Policy — Fagor 8050 M CNC Advisory API</title></head>
+<body><main><h1>Privacy Policy</h1><p>Effective: August 19, 2026</p>
+<p>This API receives CNC program text and machining parameters solely to return static advisory checks and calculations.</p>
+<p>The service does not include a database and does not intentionally retain request bodies. The hosting provider may temporarily process technical request metadata for security, diagnostics, and service operation.</p>
+<p>Do not submit personal information, trade secrets, export-controlled data, or production files you are not authorized to process.</p>
+<p>This service does not control machinery and does not guarantee that generated or reviewed CNC programs are safe or correct.</p>
+<p>Service owner: ESSharpPicks. Contact through the public GitHub repository for this service.</p>
+</main></body></html>"""
 
 
 @app.post(
